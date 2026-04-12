@@ -144,7 +144,7 @@ func (s *SubJsonService) GetJson(subId string, host string) (string, string, err
 		finalJson, _ = json.MarshalIndent(configArray, "", "  ")
 	}
 
-	header = fmt.Sprintf("upload=%d; download=%d; total=%d; expire=%d", traffic.Up, traffic.Down, traffic.Total, traffic.ExpiryTime/1000)
+	header = fmt.Sprintf("upload=%d; download=%d; total=%d; expire=%d", int64(float64(traffic.Up)*1.49), int64(float64(traffic.Down)*1.49), int64(float64(traffic.Total)*1.49), traffic.ExpiryTime/1000)
 	return string(finalJson), header, nil
 }
 
