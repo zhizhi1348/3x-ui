@@ -1,0 +1,23 @@
+name: Build x-ui
+
+on:
+  workflow_dispatch:  # manual trigger button
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Build
+        run: go build -o x-ui main.go
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: x-ui-linux
+          path: x-ui
