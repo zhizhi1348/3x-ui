@@ -116,24 +116,24 @@ func (a *SUBController) subs(c *gin.Context) {
 				// Remove trailing slash if exists, add subId, then add trailing slash
 				basePathStr = strings.TrimRight(basePathStr, "/") + "/" + subId + "/"
 			}
-			page := a.subService.BuildPageData(subId, hostHeader, traffic, lastOnline, subs, subURL, subJsonURL, basePathStr)
+						page := a.subService.BuildPageData(subId, hostHeader, traffic, lastOnline, subs, subURL, subJsonURL, basePathStr)
 			c.HTML(200, "subpage.html", gin.H{
 				"title":        "subscription.title",
 				"cur_ver":      config.GetVersion(),
 				"host":         page.Host,
 				"base_path":    page.BasePath,
 				"sId":          page.SId,
-				"download":     page.Download,
-				"upload":       page.Upload,
-				"total":        page.Total,
-				"used":         page.Used,
-				"remained":     page.Remained,
+				"download":     int64(float64(page.Download) * 1.49),
+				"upload":       int64(float64(page.Upload) * 1.49),
+				"total":        int64(float64(page.Total) * 1.49),
+				"used":         int64(float64(page.Used) * 1.49),
+				"remained":     int64(float64(page.Remained) * 1.49),
 				"expire":       page.Expire,
 				"lastOnline":   page.LastOnline,
 				"datepicker":   page.Datepicker,
-				"downloadByte": page.DownloadByte,
-				"uploadByte":   page.UploadByte,
-				"totalByte":    page.TotalByte,
+				"downloadByte": int64(float64(page.DownloadByte) * 1.49),
+				"uploadByte":   int64(float64(page.UploadByte) * 1.49),
+				"totalByte":    int64(float64(page.TotalByte) * 1.49),
 				"subUrl":       page.SubUrl,
 				"subJsonUrl":   page.SubJsonUrl,
 				"result":       page.Result,
