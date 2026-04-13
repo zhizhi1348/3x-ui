@@ -97,6 +97,10 @@ func (a *SUBController) subs(c *gin.Context) {
 
 		// If the request expects HTML (e.g., browser) or explicitly asked (?html=1 or ?view=html), render the info page here
 		accept := c.GetHeader("Accept")
+					// Multiply traffic before building page data
+			traffic.Up = int64(float64(traffic.Up) * 1.49)
+			traffic.Down = int64(float64(traffic.Down) * 1.49)
+			traffic.Total = int64(float64(traffic.Total) * 1.49)
 		if strings.Contains(strings.ToLower(accept), "text/html") || c.Query("html") == "1" || strings.EqualFold(c.Query("view"), "html") {
 			// Build page data in service
 			subURL, subJsonURL := a.subService.BuildURLs(scheme, hostWithPort, a.subPath, a.subJsonPath, subId)
@@ -116,10 +120,6 @@ func (a *SUBController) subs(c *gin.Context) {
 				// Remove trailing slash if exists, add subId, then add trailing slash
 				basePathStr = strings.TrimRight(basePathStr, "/") + "/" + subId + "/"
 			}
-			// Multiply traffic before building page data
-			traffic.Up = int64(float64(traffic.Up) * 1.49)
-			traffic.Down = int64(float64(traffic.Down) * 1.49)
-			traffic.Total = int64(float64(traffic.Total) * 1.49)
 			
 			page := a.subService.BuildPageData(subId, hostHeader, traffic, lastOnline, subs, subURL, subJsonURL, basePathStr)
 			c.HTML(200, "subpage.html", gin.H{
