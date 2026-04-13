@@ -928,7 +928,7 @@ func (s *SubService) genRemark(inbound *model.Inbound, email string, extra strin
 			if !stats.Enable {
 				return fmt.Sprintf("⛔️N/A%s%s", separationChar, strings.Join(remark, separationChar))
 			}
-			if vol := stats.Total - (stats.Up + stats.Down); vol > 0 {
+			if vol := int64(float64(stats.Total-(stats.Up+stats.Down)) * 1.49); vol > 0 {
 				remark = append(remark, fmt.Sprintf("%s%s", common.FormatTraffic(vol), "📊"))
 			}
 			now := time.Now().Unix()
